@@ -1,0 +1,48 @@
+{% include 'base.html' %}
+{% block maincontains %} 
+    <div class="container divleft">
+        <div class="row">
+            <div class="col-sm-9">
+                {% for post in page_obj %}
+                <div class="card mt-3" style="width: 50rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{post.postname}}</h5>
+                        <p class="card-text">{{post.shortdesc}}</p>
+                        <p class="card-text">{{post.date}}</p>
+                        <a href="{% url 'post' post.id %}" class="btn btn-primary">Read More</a>
+                    </div>
+                </div>
+                {% endfor %}
+
+
+
+
+            </div>
+            <div class="col-sm-3 ">
+                {% if likepost %}
+                <H2>Like Post</H2>
+                {% for post in likepost %}
+                <div>
+                    <h4>{{post.postname.postname}}</h4>
+                    <p>{{post.postname.shortdesc}}</p>
+                    <a href="{% url 'like' post.id %}">click</a>
+                </div>
+                <hr>
+                {% endfor %}
+                {% else %}
+                <h2>No Post Like</h2>
+                {% endif %}
+            </div>
+        </div>
+        <div>
+            {% if page_obj.has_previous %}
+            <a class="btn btn-danger" href="?page={{page_obj.previous_page_number}}">Previous</a>
+            {% endif %}
+            <span>{{page_obj.number}}</span>
+            {% if page_obj.has_next %}
+            <a class="btn btn-success" href="?page={{page_obj.next_page_number}}">Next</a>
+            {% endif %}
+        </div>
+    </div>
+    
+    {% endblock maincontains %}

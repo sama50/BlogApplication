@@ -1,0 +1,38 @@
+{% include 'base.html' %}
+{% block maincontains %} 
+
+<div class="container">
+    <h1>{{onepost.postname}}</h1>
+    {% if ispresent %}
+    <h5>You Like this Post</h5>
+    {% else %}
+     <form action="{% url 'addlike' onepost.id %}" method="post" class="d-inline" >
+        {% csrf_token %}
+        <input type="submit" class="btn btn-danger" value="Like">
+      </form>  
+    {% endif %}
+   
+    <br>
+    <p>
+        {{onepost.description}}
+    </p>
+    <p>{{onepost.date}}</p>
+    <h4>Add Comment</h4>
+    <form action="{% url 'addcomment' onepost.id %}" method="post">
+      {% csrf_token %}
+      {{fm.as_p}}
+      <input type="submit" class="btn btn-danger" value="add">
+    </form>
+    <div>
+      {% for commnet in allcommnet %}
+        <div>
+          <h4>{{commnet.commnent}}</h4>
+          <h6>{{commnet.user}}</h6>
+        </div>
+        <hr>
+      {% endfor %}
+    </div>
+    <a href="/">Home</a>
+</div>
+
+{% endblock maincontains %}
